@@ -41,5 +41,7 @@ function validateForm() {
 
     if (!formIsValid)
         return false;
+
+    $("#confirmation").removeClass("inactive").addClass("active");
 }
 
