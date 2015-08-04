@@ -14,9 +14,19 @@ function validateForm() {
         formIsValid = false;
     }
 
+    else {
+        $("#alert1").removeClass("active").addClass("inactive");
+        formIsValid = true;
+    }
+
     if (email == null || email == "") {
         $("#alert2").removeClass("inactive").addClass("active");
         formIsValid = false;
+    }
+
+    else {
+        $("#alert2").removeClass("active").addClass("inactive");
+        formIsValid = true;
     }
 
     if (letter == null || letter == "") {
@@ -24,6 +34,12 @@ function validateForm() {
         formIsValid = false;
     }
 
+    else {
+        $("#alert3").removeClass("active").addClass("inactive");
+        formIsValid = true;
+    }
+
     if (!formIsValid)
         return false;
 }
+
