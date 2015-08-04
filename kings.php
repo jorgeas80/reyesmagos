@@ -8,11 +8,11 @@
 
     $retval = mail($to, $subject, $message, $header);
     if ($retval == true) {
-        echo "Pues ya hemos mandado el correo a ".$_POST["email"];
+        http_response_code(200);
     }
 
     else {
-        echo "El correo no se ha mandado a ".$_POST["email"];
+        http_response_code(500);
     }
 
 ?>

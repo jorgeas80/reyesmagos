@@ -81,7 +81,7 @@
     </div>
 
     <div class="row letter noactive">
-        <form class="col s10 m10 l6" style="display: block; margin: 0 auto; float: none;" name="mainForm" onsubmit="return validateForm()" action="kings.php" method="POST">
+        <form class="col s10 m10 l6" style="display: block; margin: 0 auto; float: none;" id="mainForm" name="mainForm" action="kings.php" method="POST">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="name" type="text" class="validate" name="name">
@@ -146,7 +146,6 @@
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/app.js"></script>x
 
 <script>
     $(".button-collapse").sideNav();
@@ -174,6 +173,63 @@
         menuWidth: 300, // Default is 240
         edge: 'right', // Choose the horizontal origin
         closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
+
+    // Send the form using AJAX
+    $("#mainForm").submit(function(event) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        var formIsValid = true;
+
+        // Form validation
+        if ($("#name") == null || $("#name") == "") {
+            $("#alert1").removeClass("inactive").addClass("active");
+            formIsValid = false;
+        }
+
+        else {
+            $("#alert1").removeClass("active").addClass("inactive");
+            formIsValid = true;
+        }
+
+        if ($("#email") == null || $("#email") == "") {
+            $("#alert2").removeClass("inactive").addClass("active");
+            formIsValid = false;
+        }
+
+        else {
+            $("#alert2").removeClass("active").addClass("inactive");
+            formIsValid = true;
+        }
+
+        if ($("#letter") == null || $("#letter") == "") {
+            $("#alert3").removeClass("inactive").addClass("active");
+            formIsValid = false;
+        }
+
+        else {
+            $("#alert3").removeClass("active").addClass("inactive");
+            formIsValid = true;
+        }
+
+        if (!formIsValid)
+            return false;
+
+        // Get some values from elements in the page
+        var $form = $(this);
+        var url = $form.attr('action');
+
+        // Send the data using POST
+        $.post(url, {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            letter: $("#letter").val(),
+        }).done(function(data) {
+            $("#confirmation").removeClass("inactive").addClass("active");
+        }).fail(function() {
+            console.log("Habria que sacar algun error aqui");
+        });
     });
 </script>
 
