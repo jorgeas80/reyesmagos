@@ -183,7 +183,7 @@
         var formIsValid = true;
 
         // Form validation
-        if ($("#name") == null || $("#name") == "") {
+        if ($("#name").val() == null || $("#name").val() == "") {
             $("#alert1").removeClass("inactive").addClass("active");
             formIsValid = false;
         }
@@ -193,7 +193,7 @@
             formIsValid = true;
         }
 
-        if ($("#email") == null || $("#email") == "") {
+        if ($("#email").val() == null || $("#email").val() == "") {
             $("#alert2").removeClass("inactive").addClass("active");
             formIsValid = false;
         }
@@ -203,7 +203,7 @@
             formIsValid = true;
         }
 
-        if ($("#letter") == null || $("#letter") == "") {
+        if ($("#letter").val() == null || $("#letter").val() == "") {
             $("#alert3").removeClass("inactive").addClass("active");
             formIsValid = false;
         }
