@@ -1,12 +1,35 @@
 <?php
 
-    # A mandar el correo
-    $to = $_POST["email"];
-    $subject = "Hola papas, vuestro hijo/a, ".$_POST["name"]." ha escrito esta carta a los Reyes Magos";
-    $message = $_POST["letter"];
-    $header = "From: pajes@escribealosreyesmagos.com";
+    # Cargar Twig y SwiftMailer
+    require_once('lib/SwiftMailer/swift_required.php');
+    require_once('lib/Twig/Autoloader.php');
+    Twig_Autoloader::register();
 
-    $retval = mail($to, $subject, $message, $header);
+    $loader = new Twig_Loader_Filesystem('views');
+    $twig = new Twig_Environment($loader, array(
+        'cache' => 'cache',
+    ));
+
+    $mailer = Swift_Mailer::newInstance(Swift_MailTransport::newInstance());
+
+    # Renderizar plantilla a una cadena y crear mensaje
+    $fd = fopen("mierda.txt", "w");
+    fwrite($fd, $_POST["letter"]);
+    fclose($fd);
+
+    $template = $twig->loadTemplate('email.twig');
+    $body = $template->renderBlock('body', array('name' => $_POST["name"], 'letter' => $_POST["letter"]));
+
+    $message = Swift_Message::newInstance()
+        ->setFrom("pajes@escribealosreyesmagos.com")
+        ->setSubject("Hola papas, vuestro hijo/a, ".$_POST["email"]." ha escrito esta carta a los Reyes Magos")
+        ->setBody($body, 'text/html')
+        ->setTo($_POST["email"])
+        ->setCharset('UTF-8');
+
+    # Enviar el correo
+    $retval = $mailer->send($message);
+
     if ($retval == true) {
         http_response_code(200);
     }
